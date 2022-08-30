@@ -5,10 +5,12 @@ import org.elasticsearch.rest.BaseRestHandler;
 import org.elasticsearch.rest.BytesRestResponse;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.rest.action.RestStatusToXContentListener;
 
 import java.io.IOException;
 import java.util.List;
 
+import io.siren.dojo.es.plugin.action.CloneAction;
 import io.siren.dojo.es.plugin.model.CloneRequest;
 
 public class CloneRestHandler extends BaseRestHandler {
@@ -26,7 +28,7 @@ public class CloneRestHandler extends BaseRestHandler {
   @Override
   protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient nodeClient) throws IOException {
     CloneRequest cloneRequest = parse(restRequest);
-    return restChannel -> restChannel.sendResponse(new BytesRestResponse(RestStatus.ACCEPTED, "Yey!!")) ;
+    return restChannel -> nodeClient.executeLocally(CloneAction.INSTANCE, cloneRequest, new RestStatusToXContentListener<>(restChannel));
   }
 
   private CloneRequest parse(RestRequest restRequest) throws IOException {

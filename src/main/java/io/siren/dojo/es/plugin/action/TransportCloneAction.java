@@ -7,6 +7,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.ActionFilters;
 import org.elasticsearch.action.support.HandledTransportAction;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.internal.Client;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.io.stream.Writeable;
@@ -21,7 +22,7 @@ import io.siren.dojo.es.plugin.model.CloneRequest;
 public class TransportCloneAction extends HandledTransportAction<CloneRequest, IndexResponse> {
   Client client;
   @Inject
-  protected TransportCloneAction(TransportService transportService, ActionFilters actionFilters, Client client) {
+  public TransportCloneAction(TransportService transportService, ActionFilters actionFilters, Client client) {
     super(CloneAction.NAME, transportService, actionFilters, CloneRequest::new);
     this.client = client;
   }
@@ -56,6 +57,7 @@ public class TransportCloneAction extends HandledTransportAction<CloneRequest, I
       ir.index(cloneRequest.getIndex());
       ir.id(cloneRequest.getDstId());
       ir.source(searchResponse.getHits().getHits()[0].getSourceAsMap());
+      ir.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
       client.index(ir, listener);
     }
 
