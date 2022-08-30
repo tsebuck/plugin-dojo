@@ -9,6 +9,8 @@ import org.elasticsearch.rest.RestStatus;
 import java.io.IOException;
 import java.util.List;
 
+import io.siren.dojo.es.plugin.model.CloneRequest;
+
 public class CloneRestHandler extends BaseRestHandler {
   @Override
   public String getName() {
@@ -23,9 +25,21 @@ public class CloneRestHandler extends BaseRestHandler {
 
   @Override
   protected RestChannelConsumer prepareRequest(RestRequest restRequest, NodeClient nodeClient) throws IOException {
-    final String index = restRequest.param("index");
-    System.out.println(index);
+    CloneRequest cloneRequest = parse(restRequest);
     return restChannel -> restChannel.sendResponse(new BytesRestResponse(RestStatus.ACCEPTED, "Yey!!")) ;
   }
+
+  private CloneRequest parse(RestRequest restRequest) throws IOException {
+    final String index = restRequest.param("index");
+    CloneRequest cloneRequest = new CloneRequest();
+    cloneRequest.setIndex(index);
+    restRequest.withContentOrSourceParamParserOrNull(parser -> {
+      if(parser != null){
+        CloneRequest.PARSER.parse(parser, cloneRequest, null);
+      }
+    });
+    return  cloneRequest;
+  }
+
 
 }

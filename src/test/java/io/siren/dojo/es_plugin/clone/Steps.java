@@ -147,7 +147,7 @@ public class Steps {
   @When("a POST request is performed to the endpoint {string} with body")
   public void a_post_request_is_performed_to_the_endpoint_with_body(String path, String body) throws IOException, InterruptedException {
     String endpoint = String.format("%s%s",baseUrl, path);
-    String response = performRequest(endpoint, null);
+    performRequest(endpoint, body);
   }
 
 }
