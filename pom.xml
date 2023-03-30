@@ -11,7 +11,7 @@
 	<properties>
 		<elasticsearch.version>8.2.2</elasticsearch.version>
 		<elasticsearch.plugin.classname>io.siren.dojo.es.plugin.DocumentClonePlugin</elasticsearch.plugin.classname>
-		<log4j.version>2.17.2</log4j.version>
+		<log4j.version>2.19.0</log4j.version>
 		<cucumber.version>7.5.0</cucumber.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
