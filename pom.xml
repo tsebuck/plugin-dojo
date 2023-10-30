@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<description>Elasticsearch Document clone plugin</description>
 	<properties>
-		<elasticsearch.version>8.2.2</elasticsearch.version>
+		<elasticsearch.version>8.9.1</elasticsearch.version>
 		<elasticsearch.plugin.classname>io.siren.dojo.es.plugin.DocumentClonePlugin</elasticsearch.plugin.classname>
 		<log4j.version>2.17.2</log4j.version>
 		<cucumber.version>7.5.0</cucumber.version>
